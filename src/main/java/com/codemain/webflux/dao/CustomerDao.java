@@ -2,7 +2,9 @@ package com.codemain.webflux.dao;
 
 import com.codemain.webflux.model.CustomerDto;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -25,5 +27,13 @@ public class CustomerDao {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public Flux<CustomerDto> getFluxCustomers(){
+        return Flux.range(1, 20)
+                .delayElements(Duration.ofSeconds(1))
+                .doOnNext(System.out::println)
+                .map(a -> new CustomerDto(a, "customer"+a));
+
     }
 }
