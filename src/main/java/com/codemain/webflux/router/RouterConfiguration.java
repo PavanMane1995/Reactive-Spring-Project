@@ -17,6 +17,7 @@ public class RouterConfiguration {
     public RouterFunction<ServerResponse> routerFunction(){
         return RouterFunctions.route()
                 .GET("/router/customer",handler::getCustomers)
+                .GET("/request/customer/{input}", handler::getOneCustomer)
                 .build();
     }
 }

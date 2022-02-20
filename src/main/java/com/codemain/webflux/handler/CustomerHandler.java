@@ -23,4 +23,10 @@ public class CustomerHandler {
                 .contentType(MediaType.TEXT_EVENT_STREAM)
                 .body(customerList, CustomerDto.class);
     }
+
+    public Mono<ServerResponse> getOneCustomer(ServerRequest serverRequest){
+        Integer customerId = Integer.parseInt(serverRequest.pathVariable("input"));
+        Mono<CustomerDto> cust =customerDao.getFluxCustomers().filter(a -> a.getId() == customerId).next();
+        return ServerResponse.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(cust, CustomerDto.class);
+    }
 }
